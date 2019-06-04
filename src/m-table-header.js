@@ -17,6 +17,7 @@ export class MTableHeader extends React.Component {
           align={['numeric'].indexOf(columnDef.type) !== -1 ? "right" : "left"}
           className={this.props.classes.header}
           style={{ ...this.props.headerStyle, ...columnDef.headerStyle }}
+          {...columnDef.customTags}
         >
           {(columnDef.sort !== false && columnDef.sorting !== false && this.props.sorting)
             ? <TableSortLabel

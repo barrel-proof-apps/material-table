@@ -86,6 +86,7 @@ export interface Column {
   sorting?: boolean;
   title?: string;
   type?: ('string' | 'boolean' | 'numeric' | 'date' | 'datetime' | 'time' | 'currency');
+  customTags?: any;
 }
 
 export interface Components {

@@ -710,7 +710,9 @@ MaterialTable.propTypes = {
     searchable: PropTypes.bool,
     sorting: PropTypes.bool,
     title: PropTypes.string,
-    type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency'])
+    type: PropTypes.oneOf(['string', 'boolean', 'numeric', 'date', 'datetime', 'time', 'currency']),
+    customTags: PropTypes.any
+
   })).isRequired,
   components: PropTypes.shape({
     Action: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
