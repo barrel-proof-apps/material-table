@@ -11,11 +11,11 @@ exports["default"] = void 0;
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -75,13 +75,14 @@ function (_React$Component) {
       }).map(function (columnDef, index) {
         var value = _this2.props.getFieldValue(_this2.props.data, columnDef);
 
-        return React.createElement(_this2.props.components.Cell, {
+        var customTags = _this2.props.data.customTags && _this2.props.data.customTags.row || {};
+        return React.createElement(_this2.props.components.Cell, (0, _extends2["default"])({
           icons: _this2.props.icons,
           columnDef: columnDef,
           value: value,
           key: columnDef.tableData.id,
           rowData: _this2.props.data
-        });
+        }, customTags));
       });
       return mapArr;
     }

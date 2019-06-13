@@ -10,6 +10,7 @@ export default class MTableBodyRow extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
+        const customTags = this.props.data.customTags && this.props.data.customTags.row ||{};
         return (
           <this.props.components.Cell
             icons={this.props.icons}
@@ -17,6 +18,7 @@ export default class MTableBodyRow extends React.Component {
             value={value}
             key={columnDef.tableData.id}
             rowData={this.props.data}
+            {...customTags}
           />
         );
       });
