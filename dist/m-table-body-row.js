@@ -75,16 +75,26 @@ function (_React$Component) {
       }).map(function (columnDef, index) {
         var value = _this2.props.getFieldValue(_this2.props.data, columnDef);
 
-        var customTags = _this2.props.data.customTags && _this2.props.data.customTags.row || {};
-        return React.createElement(_this2.props.components.Cell, (0, _extends2["default"])({
+        return React.createElement(_this2.props.components.Cell, {
           icons: _this2.props.icons,
           columnDef: columnDef,
           value: value,
           key: columnDef.tableData.id,
           rowData: _this2.props.data
-        }, customTags));
+        });
       });
       return mapArr;
+    }
+  }, {
+    key: "cellCustomTags",
+    value: function cellCustomTags(props) {
+      var customTags = props.data.customTags && props.data.customTags.cells || {};
+      return customTags[props.path] || {};
+    }
+  }, {
+    key: "rowCustomTags",
+    value: function rowCustomTags(props) {
+      return props.data.customTags && props.data.customTags.row || {};
     }
   }, {
     key: "renderActions",
@@ -116,13 +126,14 @@ function (_React$Component) {
     value: function renderSelectionColumn() {
       var _this4 = this;
 
-      return React.createElement(_core.TableCell, {
+      var customTags = this.cellCustomTags(this.props);
+      return React.createElement(_core.TableCell, (0, _extends2["default"])({
         padding: "none",
         key: "key-selection-column",
         style: {
           width: 48 + 12 * (this.props.treeDataMaxLevel - 1)
         }
-      }, React.createElement(_core.Checkbox, {
+      }, customTags), React.createElement(_core.Checkbox, {
         checked: this.props.data.tableData.checked === true,
         onClick: function onClick(e) {
           return e.stopPropagation();
@@ -151,15 +162,17 @@ function (_React$Component) {
         });
       };
 
+      var customTags = this.cellCustomTags(this.props);
+
       if (typeof this.props.detailPanel == 'function') {
-        return React.createElement(_core.TableCell, {
+        return React.createElement(_core.TableCell, (0, _extends2["default"])({
           padding: "none",
           key: "key-detail-panel-column",
           style: {
             width: 48,
             textAlign: 'center'
           }
-        }, React.createElement(_core.IconButton, {
+        }, customTags), React.createElement(_core.IconButton, {
           style: (0, _objectSpread2["default"])({
             transition: 'all ease 200ms'
           }, this.rotateIconStyle(this.props.data.tableData.showDetailPanel)),
@@ -170,14 +183,14 @@ function (_React$Component) {
           }
         }, React.createElement(this.props.icons.DetailPanel, null)));
       } else {
-        return React.createElement(_core.TableCell, {
+        return React.createElement(_core.TableCell, (0, _extends2["default"])({
           padding: "none",
           key: "key-detail-panel-column",
           style: {
             width: 48 * this.props.detailPanel.length,
             textAlign: 'center'
           }
-        }, this.props.detailPanel.map(function (panel, index) {
+        }, customTags), this.props.detailPanel.map(function (panel, index) {
           if (typeof panel === "function") {
             panel = panel(_this5.props.data);
           }
@@ -336,6 +349,7 @@ function (_React$Component) {
           hasAnyEditingRow = _this$props.hasAnyEditingRow,
           treeDataMaxLevel = _this$props.treeDataMaxLevel,
           rowProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "data", "columns", "components", "detailPanel", "getFieldValue", "isTreeData", "onRowClick", "onRowSelected", "onTreeExpandChanged", "onToggleDetailPanel", "onEditingCanceled", "onEditingApproved", "options", "hasAnyEditingRow", "treeDataMaxLevel"]);
+      var customTags = this.rowCustomTags(this.props);
       return React.createElement(React.Fragment, null, React.createElement(_core.TableRow, (0, _extends2["default"])({
         selected: hasAnyEditingRow
       }, rowProps, {
@@ -352,7 +366,7 @@ function (_React$Component) {
             onToggleDetailPanel(_this6.props.path, panel);
           });
         }
-      }), renderColumns), this.props.data.tableData.childRows && this.props.data.tableData.isTreeExpanded && this.props.data.tableData.childRows.map(function (data, index) {
+      }, customTags), renderColumns), this.props.data.tableData.childRows && this.props.data.tableData.isTreeExpanded && this.props.data.tableData.childRows.map(function (data, index) {
         if (data.tableData.editing) {
           return React.createElement(_this6.props.components.EditRow, {
             columns: _this6.props.columns.filter(function (columnDef) {

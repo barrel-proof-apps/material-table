@@ -10,7 +10,6 @@ export default class MTableBodyRow extends React.Component {
     const mapArr = this.props.columns.filter(columnDef => !columnDef.hidden && !(columnDef.tableData.groupOrder > -1))
       .map((columnDef, index) => {
         const value = this.props.getFieldValue(this.props.data, columnDef);
-        const customTags = this.props.data.customTags && this.props.data.customTags.row ||{};
         return (
           <this.props.components.Cell
             icons={this.props.icons}
@@ -18,13 +17,18 @@ export default class MTableBodyRow extends React.Component {
             value={value}
             key={columnDef.tableData.id}
             rowData={this.props.data}
-            {...customTags}
           />
         );
       });
     return mapArr;
   }
-
+  cellCustomTags(props) {
+    const customTags = props.data.customTags && props.data.customTags.cells ||{};
+    return customTags[props.path] || {};
+  }
+  rowCustomTags(props) {
+    return props.data.customTags && props.data.customTags.row ||{};
+  }
   renderActions() {
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
     return (
@@ -36,8 +40,9 @@ export default class MTableBodyRow extends React.Component {
     );
   }
   renderSelectionColumn() {
+    const customTags = this.cellCustomTags(this.props);
     return (
-      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }}>
+      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }} {...customTags}>
         <Checkbox
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
@@ -58,10 +63,11 @@ export default class MTableBodyRow extends React.Component {
   renderDetailPanelColumn() {
 
     const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, { style });
+    const customTags = this.cellCustomTags(this.props);
 
     if (typeof this.props.detailPanel == 'function') {
       return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }}>
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }} {...customTags}>
           <IconButton
             style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
             onClick={(event) => {
@@ -76,7 +82,7 @@ export default class MTableBodyRow extends React.Component {
     }
     else {
       return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }}>
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }} {...customTags}>
           {this.props.detailPanel.map((panel, index) => {
 
             if (typeof panel === "function") {
@@ -225,7 +231,7 @@ export default class MTableBodyRow extends React.Component {
       hasAnyEditingRow,
       treeDataMaxLevel,
       ...rowProps } = this.props;
-
+    const customTags = this.rowCustomTags(this.props);
     return (
       <>
         <TableRow
@@ -244,6 +250,7 @@ export default class MTableBodyRow extends React.Component {
                 onToggleDetailPanel(this.props.path, panel);
               });
           }}
+          {...customTags}
         >
           {renderColumns}
         </TableRow>
