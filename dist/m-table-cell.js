@@ -158,7 +158,7 @@ function (_React$Component) {
       var _this$props = this.props,
           columnDef = _this$props.columnDef,
           rowData = _this$props.rowData;
-      var result = rowData.customTags && rowData.customTags.cells && rowData.cells[columnDef.field] || {};
+      var result = rowData.customTags && rowData.customTags.cells && rowData.customTags.cells[columnDef.field] || {};
       console.log("cellCustomTags", columnDef.field, result);
       return result;
     }
