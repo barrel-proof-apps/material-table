@@ -153,18 +153,29 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "cellCustomTags",
+    value: function cellCustomTags(props) {
+      var _this$props = this.props,
+          columnDef = _this$props.columnDef,
+          rowData = _this$props.rowData;
+      var result = rowData.customTags && rowData.customTags.cells && rowData.cells[columnDef.path] || {};
+      console.log("cellCustomTags", columnDef, result);
+      return result;
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          icons = _this$props.icons,
-          columnDef = _this$props.columnDef,
-          rowData = _this$props.rowData,
-          cellProps = (0, _objectWithoutProperties2["default"])(_this$props, ["icons", "columnDef", "rowData"]);
+      var _this$props2 = this.props,
+          icons = _this$props2.icons,
+          columnDef = _this$props2.columnDef,
+          rowData = _this$props2.rowData,
+          cellProps = (0, _objectWithoutProperties2["default"])(_this$props2, ["icons", "columnDef", "rowData"]);
+      var customTags = this.cellCustomTags(this.props);
       return React.createElement(_core.TableCell, (0, _extends2["default"])({}, cellProps, {
         style: this.getStyle(),
         align: ['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left",
         onClick: this.handleClickCell
-      }), this.props.children, this.getRenderValue());
+      }, customTags), this.props.children, this.getRenderValue());
     }
   }]);
   return MTableCell;

@@ -22,11 +22,6 @@ export default class MTableBodyRow extends React.Component {
       });
     return mapArr;
   }
-  cellCustomTags(props) {
-    const result = props.data.customTags && props.data.customTags.cells && props.data.customTags.cells[props.path] ||{};
-    console.log("cellCustomTags", props.path, result);
-    return result;
-  }
   rowCustomTags(props) {
     const result = props.data.customTags && props.data.customTags.row ||{};
     console.log("rowCustomTags", result);
@@ -43,9 +38,8 @@ export default class MTableBodyRow extends React.Component {
     );
   }
   renderSelectionColumn() {
-    const customTags = this.cellCustomTags(this.props);
     return (
-      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }} {...customTags}>
+      <TableCell padding="none" key="key-selection-column" style={{ width: 48 + 12 * (this.props.treeDataMaxLevel - 1) }}>
         <Checkbox
           checked={this.props.data.tableData.checked === true}
           onClick={(e) => e.stopPropagation()}
@@ -66,11 +60,10 @@ export default class MTableBodyRow extends React.Component {
   renderDetailPanelColumn() {
 
     const CustomIcon = ({ icon, style }) => typeof icon === "string" ? <Icon style={style}>{icon}</Icon> : React.createElement(icon, { style });
-    const customTags = this.cellCustomTags(this.props);
 
     if (typeof this.props.detailPanel == 'function') {
       return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }} {...customTags}>
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48, textAlign: 'center' }}>
           <IconButton
             style={{ transition: 'all ease 200ms', ...this.rotateIconStyle(this.props.data.tableData.showDetailPanel) }}
             onClick={(event) => {
@@ -85,7 +78,7 @@ export default class MTableBodyRow extends React.Component {
     }
     else {
       return (
-        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }} {...customTags}>
+        <TableCell padding="none" key="key-detail-panel-column" style={{ width: 48 * this.props.detailPanel.length, textAlign: 'center' }}>
           {this.props.detailPanel.map((panel, index) => {
 
             if (typeof panel === "function") {

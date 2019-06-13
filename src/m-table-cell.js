@@ -86,10 +86,17 @@ export default class MTableCell extends React.Component {
 
     return { ...this.props.style, ...cellStyle };
   }
+  cellCustomTags(props) {
+    const { columnDef, rowData } = this.props;
+    const result = rowData.customTags && rowData.customTags.cells && rowData.cells[columnDef.path] ||{};
+    console.log("cellCustomTags", columnDef, result);
+    return result;
+  }
 
   render() {
 
     const { icons, columnDef, rowData, ...cellProps } = this.props;
+    const customTags = this.cellCustomTags(this.props);
 
     return (
       <TableCell
@@ -97,6 +104,7 @@ export default class MTableCell extends React.Component {
         style={this.getStyle()}
         align={['numeric'].indexOf(this.props.columnDef.type) !== -1 ? "right" : "left"}
         onClick={this.handleClickCell}
+        {...customTags}
       >
         {this.props.children}
         {this.getRenderValue()}

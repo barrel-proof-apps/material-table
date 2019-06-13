@@ -11,11 +11,11 @@ exports["default"] = void 0;
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
 
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -86,13 +86,6 @@ function (_React$Component) {
       return mapArr;
     }
   }, {
-    key: "cellCustomTags",
-    value: function cellCustomTags(props) {
-      var result = props.data.customTags && props.data.customTags.cells && props.data.customTags.cells[props.path] || {};
-      console.log("cellCustomTags", props.path, result);
-      return result;
-    }
-  }, {
     key: "rowCustomTags",
     value: function rowCustomTags(props) {
       var result = props.data.customTags && props.data.customTags.row || {};
@@ -129,14 +122,13 @@ function (_React$Component) {
     value: function renderSelectionColumn() {
       var _this4 = this;
 
-      var customTags = this.cellCustomTags(this.props);
-      return React.createElement(_core.TableCell, (0, _extends2["default"])({
+      return React.createElement(_core.TableCell, {
         padding: "none",
         key: "key-selection-column",
         style: {
           width: 48 + 12 * (this.props.treeDataMaxLevel - 1)
         }
-      }, customTags), React.createElement(_core.Checkbox, {
+      }, React.createElement(_core.Checkbox, {
         checked: this.props.data.tableData.checked === true,
         onClick: function onClick(e) {
           return e.stopPropagation();
@@ -165,17 +157,15 @@ function (_React$Component) {
         });
       };
 
-      var customTags = this.cellCustomTags(this.props);
-
       if (typeof this.props.detailPanel == 'function') {
-        return React.createElement(_core.TableCell, (0, _extends2["default"])({
+        return React.createElement(_core.TableCell, {
           padding: "none",
           key: "key-detail-panel-column",
           style: {
             width: 48,
             textAlign: 'center'
           }
-        }, customTags), React.createElement(_core.IconButton, {
+        }, React.createElement(_core.IconButton, {
           style: (0, _objectSpread2["default"])({
             transition: 'all ease 200ms'
           }, this.rotateIconStyle(this.props.data.tableData.showDetailPanel)),
@@ -186,14 +176,14 @@ function (_React$Component) {
           }
         }, React.createElement(this.props.icons.DetailPanel, null)));
       } else {
-        return React.createElement(_core.TableCell, (0, _extends2["default"])({
+        return React.createElement(_core.TableCell, {
           padding: "none",
           key: "key-detail-panel-column",
           style: {
             width: 48 * this.props.detailPanel.length,
             textAlign: 'center'
           }
-        }, customTags), this.props.detailPanel.map(function (panel, index) {
+        }, this.props.detailPanel.map(function (panel, index) {
           if (typeof panel === "function") {
             panel = panel(_this5.props.data);
           }
