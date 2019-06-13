@@ -88,13 +88,16 @@ function (_React$Component) {
   }, {
     key: "cellCustomTags",
     value: function cellCustomTags(props) {
-      var customTags = props.data.customTags && props.data.customTags.cells || {};
-      return customTags[props.path] || {};
+      var result = props.data.customTags && props.data.customTags.cells && props.data.customTags.cells[props.path] || {};
+      console.log("cellCustomTags", props.path, result);
+      return result;
     }
   }, {
     key: "rowCustomTags",
     value: function rowCustomTags(props) {
-      return props.data.customTags && props.data.customTags.row || {};
+      var result = props.data.customTags && props.data.customTags.row || {};
+      console.log("rowCustomTags", result);
+      return result;
     }
   }, {
     key: "renderActions",

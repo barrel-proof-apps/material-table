@@ -23,11 +23,14 @@ export default class MTableBodyRow extends React.Component {
     return mapArr;
   }
   cellCustomTags(props) {
-    const customTags = props.data.customTags && props.data.customTags.cells ||{};
-    return customTags[props.path] || {};
+    const result = props.data.customTags && props.data.customTags.cells && props.data.customTags.cells[props.path] ||{};
+    console.log("cellCustomTags", props.path, result);
+    return result;
   }
   rowCustomTags(props) {
-    return props.data.customTags && props.data.customTags.row ||{};
+    const result = props.data.customTags && props.data.customTags.row ||{};
+    console.log("rowCustomTags", result);
+    return result;
   }
   renderActions() {
     const actions = this.props.actions.filter(a => !a.isFreeAction && !this.props.options.selection);
