@@ -88,8 +88,8 @@ export default class MTableCell extends React.Component {
   }
   cellCustomTags(props) {
     const { columnDef, rowData } = this.props;
-    const result = rowData.customTags && rowData.customTags.cells && rowData.cells[columnDef.path] ||{};
-    console.log("cellCustomTags", columnDef, result);
+    const result = rowData.customTags && rowData.customTags.cells && rowData.cells[columnDef.field] ||{};
+    console.log("cellCustomTags", columnDef.field, result);
     return result;
   }
 
